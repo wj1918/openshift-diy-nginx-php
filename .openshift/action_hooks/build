@@ -1,7 +1,26 @@
 #!/bin/bash
-source $OPENSHIFT_REPO_DIR/misc/openshift/func
-source $OPENSHIFT_REPO_DIR/misc/openshift/virtualenv
 
+# Load common
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/common
+
+# Configure versions
+
+
+PYTHON_VERSION="2.7.6"
+
+# Setup dir references
+#PYTHON_DIR="$OPENSHIFT_DATA_DIR/python"
+#VIRTUALENV_DIR="$OPENSHIFT_DATA_DIR/venv"
+#NGINX_DIR="$OPENSHIFT_DATA_DIR/nginx"
+#UWSGI_DIR="$OPENSHIFT_DATA_DIR/uwsgi"
+
+ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
+BUILD_DIR=${OPENSHIFT_TMP_DIR}/build
+CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
+TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
+
+REQUIREMENTS_FILE="$OPENSHIFT_REPO_DIR/requirements.txt"
+#TEMPLATES_DIR="$OPENSHIFT_REPO_DIR/misc/templates"
 
 # Try to guess the number of processors from /proc/cpuinfo.
 if [ -f /proc/cpuinfo ]; then
@@ -10,97 +29,15 @@ else
     NUMBER_OF_PROCESSORS=1
 fi
 
-function check_python() {
-    msg_info "Checking for python..."
-    if [ -d $PYTHON_DIR ]; then
-        msg_success "Checking for python... already installed."
-        return
-    fi
+# Load functions
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_uwsgi
 
-    msg_info "Installing python $PYTHON_VERSION..."
-    cd $OPENSHIFT_TMP_DIR
-    wget http://python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz
-
-    tar zxf Python-$PYTHON_VERSION.tgz
-    cd Python-$PYTHON_VERSION
-    ./configure --prefix=$PYTHON_DIR
-    make install -j$NUMBER_OF_PROCESSORS
-
-    check_status $? "Installing python $PYTHON_VERSION..."
-}
-
-# virtualenv is already provided by OpenShift
-# so we don't need to compile and install it
-function check_venv() {
-    msg_info "Checking for virtualenv..."
-    if [ -d $VIRTUALENV_DIR ]; then
-        msg_success "Checking for virtualenv... exists."
-        return
-    fi
-
-    msg_info "Creating virtualenv..."
-    virtualenv --no-site-packages --python="$PYTHON_DIR/bin/python" $VIRTUALENV_DIR
-    check_status $? 'Creating virtualenv...'
-}
-
-function check_uwsgi() {
-    msg_info "Checking for uWSGI..."
-
-    activate_virtualenv
-    if [ -z "$(pip freeze | grep uWSGI)" ]; then
-        msg_info 'Installling uWSGI...'
-        pip install uWSGI
-        check_status $? 'Installling uWSGI...'
-    else
-        msg_success 'Checking for uWSGI... already installed.'
-    fi
-    deactivate    
-}
-
-function check_nginx() {
-    msg_info "Checking for nginx..."
-    if [ -d $NGINX_DIR ]; then
-        msg_success "Checking for nginx... already installed."
-        return
-    fi
-
-    msg_info "Installing nginx $NGINX_VERSION..."
-    cd $OPENSHIFT_TMP_DIR
-    wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${NGINX_PCRE_VERSION}.tar.bz2
-    check_status $? "Download pcre..."
-
-    wget http://zlib.net/zlib-${NGINX_ZLIB_VERSION}.tar.gz
-    check_status $? "Download zlib..."
-
-    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-    check_status $? "Download nginx..."
-
-    tar jxf pcre-${NGINX_PCRE_VERSION}.tar.bz2
-    tar zxf zlib-${NGINX_ZLIB_VERSION}.tar.gz
-    tar zxf nginx-${NGINX_VERSION}.tar.gz
-    
-    cd nginx-${NGINX_VERSION}
-    ./configure --with-zlib=../zlib-$NGINX_ZLIB_VERSION --with-pcre=../pcre-$NGINX_PCRE_VERSION --prefix=$NGINX_DIR
-    make install -j$NUMBER_OF_PROCESSORS
-
-    check_status $? "Installing nginx $NGINX_VERSION..."
-}
-
-function install_requirements() {
-    msg_info "Procesing requirements..."
-    if [ ! -f $REQUIREMENTS_FILE ]; then
-        msg_info "Procesing requirements... not found"
-        return
-    fi
-
-    activate_virtualenv
-    pip install --use-mirrors -r $REQUIREMENTS_FILE
-    check_status $? "Procesing requirements..."
-    deactivate
-}
-
+# check python
 check_python
+# virtual env
 check_venv
+# virtual uwsgi
 check_uwsgi
-check_nginx
+# install requirement
 install_requirements

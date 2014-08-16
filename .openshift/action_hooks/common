@@ -1,5 +1,14 @@
 #!/bin/bash
 # Helper functions used by several scripts.
+# OpenShift python cartridge configuration.
+# Requited enviornment:
+# 1. $OPENSHIFT_REPO_DIR
+# 2. $OPENSHIFT_DIY_DIR
+# 3. $OPENSHIFT_TMP_DIR
+# 4. $OPENSHIFT_LOG_DIR
+# 5. $OPENSHIFT_DIY_IP
+# 6. $OPENSHIFT_DIY_PORT
+
 
 export OPENSHIFT_RUNTIME_DIR=${OPENSHIFT_DIY_DIR}/runtime/
 export OPENSHIFT_RUN_DIR=${OPENSHIFT_DIY_DIR}/run/
@@ -9,3 +18,44 @@ export PATH=${OPENSHIFT_BIN}:$PATH
 
 # When using rockmongo this is set and can cause strange errors here
 export PHPRC=${OPENSHIFT_RUNTIME_DIR}/etc/php5/
+
+ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
+BUILD_DIR=${OPENSHIFT_TMP_DIR}/build
+CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
+TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
+
+REQUIREMENTS_FILE="$OPENSHIFT_REPO_DIR/requirements.txt"
+
+# AUX functions
+
+export TERM=xterm-256color
+red='\E[31m'
+green='\E[32m'
+yellow='\E[33m'
+clear='\E[0m'
+
+function msg_error() {
+    echo -e $red"$@"$clear
+}
+
+function msg_success() {
+    echo -e $green"$@"$clear
+}
+
+function msg_info() {
+    echo -e $yellow"$@"$clear
+}
+
+function check_status() {
+    if [ $1 -ne 0 ]; then
+        msg_error "$2 failed"
+        exit 1
+    else
+        msg_info "$2 done"
+    fi
+}
+
+function activate_virtualenv() {
+    local virtualenv_dir="$OPENSHIFT_RUNTIME_DIR/venv"
+    source "$virtualenv_dir/bin/activate"
+}

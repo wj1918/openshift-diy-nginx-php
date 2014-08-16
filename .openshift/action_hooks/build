@@ -25,22 +25,27 @@ LIBTOOL_VERSION='2.4.2'
 
 NODE_VERSION='0.6.20' #'0.10.26'
 
+PYTHON_VERSION="2.7.6"
+
 declare -A PHP_PECL
 declare -A PHP_PECL_CONFIGURE
 PHP_PECL=( ["mongo"]='1.5.1' )
 PHP_PECL_CONFIGURE=( )
 
-# Setup dir references
-ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
-BUILD_DIR=${OPENSHIFT_TMP_DIR}/build
-CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
-TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
+# Try to guess the number of processors from /proc/cpuinfo.
+if [ -f /proc/cpuinfo ]; then
+    NUMBER_OF_PROCESSORS=$(grep -c ^processor /proc/cpuinfo)
+else
+    NUMBER_OF_PROCESSORS=1
+fi
 
 # Load functions
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_nginx
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php_libs
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_uwsgi
 
 # Check nginx
 check_nginx
@@ -55,3 +60,15 @@ done
 
 # Check NodeJS
 check_node
+
+# check python
+check_python
+
+# virtual env
+check_venv
+
+# virtual uwsgi
+check_uwsgi
+
+# install requirement
+install_requirements

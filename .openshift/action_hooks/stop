@@ -14,6 +14,13 @@ if [ -f ${OPENSHIFT_RUN_DIR}/php-fpm.pid ];then
     kill -QUIT `cat ${OPENSHIFT_RUN_DIR}/php-fpm.pid`
 fi
 
+echo "Stopping uwsgi."
+UWSGI_PIDFILE=$OPENSHIFT_RUN_DIR/uwsgi.pid
+if [ -f $UWSGI_PIDFILE ]; then
+    kill -QUIT $(cat $UWSGI_PIDFILE)
+fi
+
 # Always succeed, otherwise OpenShift declines to run build and start
 # hooks.
+
 exit 0

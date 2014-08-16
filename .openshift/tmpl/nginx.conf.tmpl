@@ -11,31 +11,32 @@
 #
 # The maximum number of connections for Nginx is calculated by:
 # max_clients = worker_processes * worker_connections
-worker_processes 1;
+worker_processes  1;
 
 # Maximum file descriptors that can be opened per process
 # This should be > worker_connections
 worker_rlimit_nofile 8192;
 
-error_log ${OPENSHIFT_DIY_LOG_DIR}/error.log;
-pid ${OPENSHIFT_DIY_DIR}/runtime/nginx.pid;
+error_log ${OPENSHIFT_LOG_DIR}/nginx-error.log notice;
+pid ${OPENSHIFT_RUN_DIR}/nginx.pid;
 
 events {
-  # When you need > 8000 * cpu_cores connections, you start optimizing
-  # your OS, and this is probably the point at where you hire people
-  # who are smarter than you, this is *a lot* of requests.
-  worker_connections  8000;
+    # When you need > 8000 * cpu_cores connections, you start optimizing
+    # your OS, and this is probably the point at where you hire people
+    # who are smarter than you, this is *a lot* of requests.
+    worker_connections 2048;
 
-  # This sets up some smart queueing for accept(2)'ing requests
-  # Set it to "on" if you have > worker_processes
-  accept_mutex off;
+    # This sets up some smart queueing for accept(2)'ing requests
+    # Set it to "on" if you have > worker_processes
+    accept_mutex off;
 
-  # These settings are OS specific, by defualt Nginx uses select(2),
-  # however, for a large number of requests epoll(2) and kqueue(2)
-  # are generally faster than the default (select(2))
-  # use epoll; # enable for Linux 2.6+
-  # use kqueue; # enable for *BSD (FreeBSD, OS X, ..)
+    # These settings are OS specific, by defualt Nginx uses select(2),
+    # however, for a large number of requests epoll(2) and kqueue(2)
+    # are generally faster than the default (select(2))
+    use epoll; # enable for Linux 2.6+
+    # use kqueue; # enable for *BSD (FreeBSD, OS X, ..)
 }
+
 
 http {
     include mime.types;
@@ -108,7 +109,7 @@ http {
         location / {
             index  index.html  index.htm  index.php ;
 
-            try_files $uri $uri/ @rewrites;
+            try_files $uri $uri/ @rewrites @app;
         }
 
         location = /robots.txt  { access_log off; log_not_found off; }
@@ -140,6 +141,13 @@ http {
 
             include fastcgi_params;
         }
+        
+        location @app {
+            include uwsgi_params;
+            uwsgi_pass unix://${OPENSHIFT_RUN_DIR}/uwsgi.sock;
+
+        }
+        
     }
 
     # opt-in to the future

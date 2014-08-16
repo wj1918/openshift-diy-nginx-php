@@ -14,3 +14,8 @@ ${OPENSHIFT_RUNTIME_DIR}/nginx/sbin/nginx
 
 echo "Starting php-fpm."
 ${OPENSHIFT_RUNTIME_DIR}/php5/sbin/php-fpm
+
+echo "Starting uwsgi."
+activate_virtualenv
+nohup uwsgi --ini $CONFIG_DIR/uwsgi.ini&
+# nohup $OPENSHIFT_RUNTIME_DIR/nginx/sbin/nginx&

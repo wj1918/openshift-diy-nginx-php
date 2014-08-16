@@ -2,9 +2,11 @@
 # OpenShift python cartridge configuration.
 # Requited enviornment:
 # 1. $OPENSHIFT_REPO_DIR
-# 2. $OPENSHIFT_RUNTIME_DIR
-# 3. $OPENSHIFT_DIY_DIR
-# 4. $OPENSHIFT_TMP_DIR
+# 2. $OPENSHIFT_DIY_DIR
+# 3. $OPENSHIFT_TMP_DIR
+# 4. $OPENSHIFT_LOG_DIR
+# 5. $OPENSHIFT_DIY_IP
+# 6. $OPENSHIFT_DIY_PORT
 
 # Helper functions used by several scripts.
 
@@ -17,6 +19,12 @@ export PATH=${OPENSHIFT_BIN}:$PATH
 # When using rockmongo this is set and can cause strange errors here
 export PHPRC=${OPENSHIFT_RUNTIME_DIR}/etc/php5/
 
+ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
+BUILD_DIR=${OPENSHIFT_TMP_DIR}/build
+CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
+TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
+
+REQUIREMENTS_FILE="$OPENSHIFT_REPO_DIR/requirements.txt"
 
 # AUX functions
 
@@ -48,6 +56,6 @@ function check_status() {
 }
 
 function activate_virtualenv() {
-    local virtualenv_dir="$ROOT_DIR/venv"
+    local virtualenv_dir="$OPENSHIFT_RUNTIME_DIR/venv"
     source "$virtualenv_dir/bin/activate"
 }

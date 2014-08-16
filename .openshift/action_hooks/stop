@@ -1,13 +1,13 @@
 #!/bin/bash
 
-source $OPENSHIFT_REPO_DIR/misc/openshift/config
+source $OPENSHIFT_REPO_DIR/.openshift/action_hooks/common
 
-NGINX_PIDFILE=$NGINX_DIR/logs/nginx.pid
+NGINX_PIDFILE=$OPENSHIFT_RUN_DIR/nginx.pid
 if [ -f $NGINX_PIDFILE ]; then
-    $NGINX_DIR/sbin/nginx -s stop
+    $OPENSHIFT_RUNTIME_DIR/nginx/sbin/nginx -s stop
 fi
 
-UWSGI_PIDFILE=$UWSGI_DIR/uwsgi.pid
+UWSGI_PIDFILE=$OPENSHIFT_RUN_DIR/uwsgi.pid
 if [ -f $UWSGI_PIDFILE ]; then
     kill -QUIT $(cat $UWSGI_PIDFILE)
 fi

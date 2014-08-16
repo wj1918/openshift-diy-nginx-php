@@ -5,22 +5,9 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/common
 
 # Configure versions
 
-
 PYTHON_VERSION="2.7.6"
 
 # Setup dir references
-#PYTHON_DIR="$OPENSHIFT_DATA_DIR/python"
-#VIRTUALENV_DIR="$OPENSHIFT_DATA_DIR/venv"
-#NGINX_DIR="$OPENSHIFT_DATA_DIR/nginx"
-#UWSGI_DIR="$OPENSHIFT_DATA_DIR/uwsgi"
-
-ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
-BUILD_DIR=${OPENSHIFT_TMP_DIR}/build
-CONFIG_DIR=${OPENSHIFT_DIY_DIR}/conf
-TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}/.openshift/tmpl
-
-REQUIREMENTS_FILE="$OPENSHIFT_REPO_DIR/requirements.txt"
-#TEMPLATES_DIR="$OPENSHIFT_REPO_DIR/misc/templates"
 
 # Try to guess the number of processors from /proc/cpuinfo.
 if [ -f /proc/cpuinfo ]; then

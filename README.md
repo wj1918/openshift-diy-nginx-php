@@ -40,3 +40,12 @@ If you experience problems with downloading (or building) tools on first
 push or want to use different versions of them then you may want to update
 URLs of the tools in the `.openshift/action_hooks/build` or versions
 in the `misc/openshift/config`.
+
+To simulate openshift enviornment.
+export OPENSHIFT_REPO_DIR=$HOME/projects/openshift-diy-nginx-uwsgi
+export OPENSHIFT_DIY_DIR=$HOME/projects/DUMMY_OPENSHIFT_DIY/
+export OPENSHIFT_TMP_DIR=/tmp/
+export OPENSHIFT_LOG_DIR=/tmp/log/
+export OPENSHIFT_DIY_IP=127.0.0.1
+export OPENSHIFT_DIY_PORT=8080
+

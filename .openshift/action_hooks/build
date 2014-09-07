@@ -46,6 +46,7 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_uwsgi
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_django
 
 # Check nginx
 check_nginx
@@ -64,11 +65,14 @@ check_node
 # check python
 check_python
 
-# virtual env
+# check virtual env
 check_venv
 
-# virtual uwsgi
+# check uwsgi
 check_uwsgi
+
+# check uwsgi
+check_django
 
 # install requirement
 install_requirements

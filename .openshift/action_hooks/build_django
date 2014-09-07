@@ -1,0 +1,31 @@
+#!/bin/bash
+
+function check_django() {
+    msg_info "Checking for Django ..."
+
+    activate_virtualenv
+    if [ -z "$(pip freeze | grep Django)" ]; then
+        msg_info 'Installling Django...'
+        pip install Django
+        check_status $? 'Installling Django...'
+	cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/
+	pushd $OPENSHIFT_REPO_DIR/wsgi/
+	rm -rf mysite
+	django-admin.py startproject mysite
+	pushd mysite
+ 	python manage.py migrate
+	python manage.py createsuperuser --email=wj1918@hotmail.com --username=admin --noinput
+	echo -e "from django.contrib.staticfiles.urls import staticfiles_urlpatterns\nurlpatterns += staticfiles_urlpatterns()" >> mysite/urls.py	
+	mv ../secure_db.py .
+	export DJANGO_SETTINGS_MODULE=mysite.settings
+	python secure_db.py
+	unset DJANGO_SETTINGS_MODULE
+	popd
+	popd
+	
+    else
+        msg_success 'Checking for Django ... already installed.'
+    fi
+    deactivate    
+}
+

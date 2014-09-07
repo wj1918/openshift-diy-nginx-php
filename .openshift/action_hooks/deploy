@@ -39,6 +39,11 @@ cp ${TEMPLATE_DIR}/php-fpm.conf.tmpl ${BUILD_DIR}/php-fpm.conf
 perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/php-fpm.conf
 cp ${BUILD_DIR}/php-fpm.conf ${PHP_DIR}/etc/php-fpm.conf
 
+echo "Pre-processing phpmyadmin config."
+cp ${TEMPLATE_DIR}/config.inc.php.tmpl ${BUILD_DIR}/config.inc.php
+perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/config.inc.php
+cp ${BUILD_DIR}/config.inc.php ${OPENSHIFT_REPO_DIR}/web/phpMyAdmin/config.inc.php
+
 rm -rf ${BUILD_DIR}
 
 bash_profile=${OPENSHIFT_DATA_DIR}/.bash_profile

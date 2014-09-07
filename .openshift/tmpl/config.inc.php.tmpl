@@ -1,0 +1,10 @@
+<?php
+
+$i=0;
+$i++;
+$cfg['Servers'][$i]['host']          = '${OPENSHIFT_MYSQL_DB_HOST}';
+$cfg['Servers'][$i]['port']          = '${OPENSHIFT_MYSQL_DB_PORT}';
+$cfg['Servers'][$i]['user']          = '${OPENSHIFT_MYSQL_DB_USERNAME}';
+$cfg['Servers'][$i]['password']      = '${OPENSHIFT_MYSQL_DB_PASSWORD}'; 
+$cfg['Servers'][$i]['auth_type']     = 'config';
+?>

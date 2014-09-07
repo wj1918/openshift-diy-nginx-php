@@ -26,6 +26,7 @@ LIBTOOL_VERSION='2.4.2'
 NODE_VERSION='0.6.20' #'0.10.26'
 
 PYTHON_VERSION="2.7.6"
+PHPMYADMIN_VERSION="4.2.8"
 
 declare -A PHP_PECL
 declare -A PHP_PECL_CONFIGURE
@@ -47,6 +48,7 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_uwsgi
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_django
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phpmyadmin
 
 # Check nginx
 check_nginx
@@ -71,8 +73,11 @@ check_venv
 # check uwsgi
 check_uwsgi
 
-# check uwsgi
+# check django
 check_django
+
+# check phpmyadmin
+check_phpmyadmin
 
 # install requirement
 install_requirements

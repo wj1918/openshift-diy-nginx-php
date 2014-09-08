@@ -21,10 +21,6 @@ function install_python() {
 # python is already provided by OpenShift
 # so we don't need to compile and install it
 function check_python() {
-    if which python; then  
-	return 0
-    fi
-	
     local python_bin=${ROOT_DIR}/python/bin/python
 
     if [[ ! -e  ${python_bin} ]]; then
@@ -45,7 +41,7 @@ function check_python() {
 # virtualenv is already provided by OpenShift
 # so we don't need to compile and install it
 function check_venv() {
-    local python_bin=`which python`
+    local python_bin=${ROOT_DIR}/python/bin/python
     local virtualenv_dir="$ROOT_DIR/venv"
     
     msg_info "Checking for virtualenv..."

@@ -46,10 +46,9 @@ cp ${BUILD_DIR}/config.inc.php ${OPENSHIFT_REPO_DIR}/web/phpMyAdmin/config.inc.p
 
 rm -rf ${BUILD_DIR}
 
-bash_profile=${OPENSHIFT_DATA_DIR}/.bash_profile
-echo "Copy bash profile."
-cp ${TEMPLATE_DIR}/bash_profile.tmpl ${bash_profile}
-
+#bash_profile=${OPENSHIFT_DATA_DIR}/.bash_profile
+#echo "Copy bash profile."
+#cp ${TEMPLATE_DIR}/bash_profile.tmpl ${bash_profile}
 
 env | sed 's/[\%]/\\&/g;s/\([^=]*\)=\(.*\)/s%${\1}%\2%/' > $OPENSHIFT_TMP_DIR/sed.script
 

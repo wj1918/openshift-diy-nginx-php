@@ -1,51 +1,17 @@
+#!/usr/bin/env python
+
 import os
+import sys
 
-html = """<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Python 2.7 + Nginx + uWSGI on OpenShift</title>
-<style>
-body {
-    background: #333;
-    color: rgb(153, 153, 153);
-    width: 800px;
-    margin: auto;
-    font-family: "Helvetica Neue",Helvetica,"Liberation Sans",Arial,sans-serif;
-    font-size: 12px;
-}
-.box {
-    background: rgba(0, 0, 0, 0.15);
-    margin: 2em;
-    padding: 1em;
-}
-.box > div {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    padding: 0.5em;
-}
-</style>
-</head>
-<body>
-<div class="box">
-<h1>Python 2.7 + Nginx + uWSGI</h1>
-<h2>Your application environment</h2>
-%s
-</div>
-</body>
-</html>
-"""
+os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'mysite'))
+virtenv = os.environ['OPENSHIFT_RUNTIME_DIR'] + '/venv/'
+os.environ['PYTHON_EGG_CACHE'] = os.path.join(virtenv, 'lib/python2.7/site-packages')
+virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
+try:
+    execfile(virtualenv, dict(__file__=virtualenv))
+except:
+    pass
 
-
-def application(env, start_response):
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    lines = []
-    for k, v in os.environ.items():
-        if "PASSW" not in k:  # don't show passwords
-            lines.append("<div><b>{0}</b> = {1}</div>".format(k, v))
-    vals = ''.join(lines)
-    return html % vals
-
-
-if __name__ == "__main__":
-    from wsgiref.simple_server import make_server
-    make_server('127.0.0.1', 80, application).serve_forever()
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()

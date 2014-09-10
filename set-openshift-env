@@ -1,0 +1,21 @@
+#!/bin/bash
+export OPENSHIFT_REPO_DIR=$HOME/projects/diy-all/openshift-diy-nginx-php/
+export OPENSHIFT_DIY_DIR=$HOME/projects/DUMMY_OPENSHIFT_DIY/
+export OPENSHIFT_TMP_DIR=/tmp/
+export OPENSHIFT_LOG_DIR=/tmp/log/
+export OPENSHIFT_DIY_LOG_DIR=$OPENSHIFT_LOG_DIR
+export OPENSHIFT_DIY_IP=127.0.0.1
+export OPENSHIFT_DIY_PORT=8080
+
+export OPENSHIFT_MYSQL_DB_HOST=localhost
+export OPENSHIFT_MYSQL_DB_PORT=3306
+export OPENSHIFT_MYSQL_DB_USERNAME=root
+export OPENSHIFT_MYSQL_DB_PASSWORD=password
+
+mkdir -p $OPENSHIFT_DIY_LOG_DIR
+mkdir -p $OPENSHIFT_DIY_DIR/runtime/php5/bin
+mkdir -p $OPENSHIFT_DIY_DIR/runtime/php5/sbin
+mkdir -p $OPENSHIFT_DIY_DIR/runtime/php5/etc
+
+ln -s `which php` $OPENSHIFT_DIY_DIR/runtime/php5/bin/php
+ln -s `which php5-fpm` $OPENSHIFT_DIY_DIR/runtime/php5/sbin/php-fpm

@@ -53,16 +53,33 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phpmyadmin
 # Check nginx
 check_nginx
 
-# Check PHP
-check_php
+if [ "$BUILD_PHP_FROM_SOURCE" == "Yes" ]; then
 
-# Check pecl extensions
-for ext in "${!PHP_PECL[@]}"; do
-    check_pecl ${ext} ${PHP_PECL["$ext"]} ${PHP_PECL_CONFIGURE["$ext"]};
-done
+	# Check PHP
+	check_php
+
+	# Check pecl extensions
+	for ext in "${!PHP_PECL[@]}"; do
+	    check_pecl ${ext} ${PHP_PECL["$ext"]} ${PHP_PECL_CONFIGURE["$ext"]};
+	done
+else
+    echo "Use installed php"
+    
+	if which php; then 
+        ln -fs `which php` ${ROOT_DIR}/php5/bin/php
+    fi
+    
+	if which php5-fpm; then 
+	  ln -fs `which php5-fpm` ${ROOT_DIR}/php5/sbin/php-fpm 
+    fi
+
+	if which php-fpm; then 
+	  ln -fs `which php5-fpm`  ${ROOT_DIR}/php5/sbin/php-fpm 
+    fi
+fi
 
 # Check NodeJS
-check_node
+# check_node
 
 # check python
 check_python

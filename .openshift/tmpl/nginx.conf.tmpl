@@ -153,14 +153,14 @@ http {
 
         location /phpMyAdmin/ {
             index index.php;
-            root ${OPENSHIFT_RUNTIME_DIR};
+            root ${OPENSHIFT_RUNTIME_DIR}www;
             location ~ \.php$ {
                 try_files $uri =404;
                 fastcgi_pass php-fpm;
                 fastcgi_index index.php;
                 fastcgi_split_path_info ^(.+?\.php)(/.*)$;
 #                rewrite ^ http://www.google.com/?q=$fastcgi_script_name last; break;
-                if (!-f ${OPENSHIFT_RUNTIME_DIR}$fastcgi_script_name) {
+                if (!-f ${OPENSHIFT_RUNTIME_DIR}www$fastcgi_script_name) {
                     return 404;
                 }        
             	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;

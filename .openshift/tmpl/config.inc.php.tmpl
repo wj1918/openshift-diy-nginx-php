@@ -1,10 +1,9 @@
 <?php
+$cfg['AllowArbitraryServer']=true;
+$cfg['blowfish_secret'] = 'ba17c1ec07d65003';  // use here a value of your choice
 
 $i=0;
 $i++;
+$cfg['Servers'][$i]['auth_type']     = 'cookie';
 $cfg['Servers'][$i]['host']          = '${OPENSHIFT_MYSQL_DB_HOST}';
-$cfg['Servers'][$i]['port']          = '${OPENSHIFT_MYSQL_DB_PORT}';
-$cfg['Servers'][$i]['user']          = '${OPENSHIFT_MYSQL_DB_USERNAME}';
-$cfg['Servers'][$i]['password']      = '${OPENSHIFT_MYSQL_DB_PASSWORD}'; 
-$cfg['Servers'][$i]['auth_type']     = 'config';
 ?>

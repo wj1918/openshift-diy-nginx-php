@@ -11,8 +11,8 @@ function install_phpmyadmin() {
     echo "Unpacking ${pkg}."
     tar xfj ${pkg} 
     mv phpMyAdmin-${PHPMYADMIN_VERSION}-all-languages phpMyAdmin 
-    rm -rf $OPENSHIFT_REPO_DIR/web/phpMyAdmin
-    mv phpMyAdmin ${OPENSHIFT_RUNTIME_DIR}
+    rm -rf ${OPENSHIFT_RUNTIME_DIR}www/phpMyAdmin
+    mv phpMyAdmin ${OPENSHIFT_RUNTIME_DIR}www
 
     echo "Cleaning build directory."
     rm -rf ${BUILD_DIR}
@@ -20,9 +20,9 @@ function install_phpmyadmin() {
 }
 
 function check_phpmyadmin() {
-    local phpmyadmin_bin=${OPENSHIFT_RUNTIME_DIR}/phpMyAdmin
+    local phpmyadmin_dir=${OPENSHIFT_RUNTIME_DIR}www/phpMyAdmin/
 
-    if [[ ! -d  ${phpmyadmin_bin} ]]; then
+    if [[ ! -d  ${phpmyadmin_dir} ]]; then
         echo "phpMyAdmin not installed."
         install_phpmyadmin
     fi

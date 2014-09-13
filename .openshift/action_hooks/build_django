@@ -6,33 +6,35 @@ function check_django() {
 
     activate_virtualenv
     if [ -z "$(pip freeze | grep Django)" ]; then
+#    if [[ true ]]; then
         msg_info 'Installling Django...'
         pip install Django
         check_status $? 'Installling Django...'
-	cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/
-	pushd $OPENSHIFT_REPO_DIR/wsgi/
-	rm -rf ${DJANGO_SITE_NAME}
-	django-admin.py startproject ${DJANGO_SITE_NAME}
-	pushd ${DJANGO_SITE_NAME}
- 	python manage.py migrate
-	python manage.py createsuperuser --email=wj1918@hotmail.com --username=admin --noinput
+        cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/
+        pushd $OPENSHIFT_REPO_DIR/wsgi/
+        rm -rf ${DJANGO_SITE_NAME}
+        django-admin.py startproject ${DJANGO_SITE_NAME}
 
-    echo "Pre-processing Django config."
-    mkdir -p ${BUILD_DIR}
-    cp ${TEMPLATE_DIR}/settings.py.tmpl ${BUILD_DIR}/settings.py 
-    perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/settings.py 
-    cp ${BUILD_DIR}/settings.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
+        echo "Pre-processing Django config."
+        mkdir -p ${BUILD_DIR}
+        cp ${TEMPLATE_DIR}/settings.py.tmpl ${BUILD_DIR}/settings.py 
+        perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/settings.py 
+        cp ${BUILD_DIR}/settings.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
 
-    cp ${TEMPLATE_DIR}/urls.py.tmpl ${BUILD_DIR}/urls.py
-    perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/urls.py
-    cp ${BUILD_DIR}/urls.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
+        cp ${TEMPLATE_DIR}/urls.py.tmpl ${BUILD_DIR}/urls.py
+        perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/urls.py
+        cp ${BUILD_DIR}/urls.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
 
-	mv ../secure_db.py .
-	export DJANGO_SETTINGS_MODULE=${DJANGO_SITE_NAME}.settings
-	python secure_db.py
-	unset DJANGO_SETTINGS_MODULE
-	popd
-	popd
+        pushd ${DJANGO_SITE_NAME}
+        export DJANGO_SETTINGS_MODULE=${DJANGO_SITE_NAME}.settings
+        python manage.py migrate
+        python manage.py createsuperuser --email=wj1918@hotmail.com --username=admin --noinput
+
+        mv ../secure_db.py .
+        python secure_db.py
+        unset DJANGO_SETTINGS_MODULE
+        popd
+        popd
 	
     else
         msg_success 'Checking for Django ... already installed.'

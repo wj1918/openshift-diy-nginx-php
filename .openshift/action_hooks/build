@@ -90,11 +90,12 @@ check_venv
 # check uwsgi
 check_uwsgi
 
-# check django
-check_django
-
 # check phpmyadmin
 check_phpmyadmin
 
 # install requirement
 install_requirements
+
+# check django
+check_django
+

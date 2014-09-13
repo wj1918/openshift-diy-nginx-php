@@ -1,1 +1,2 @@
 python-social-auth
+MySQL-python

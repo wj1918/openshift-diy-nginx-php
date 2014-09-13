@@ -82,6 +82,16 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', 
+        'NAME': 'mymccc',
+        'USER': '${OPENSHIFT_MYSQL_DB_USERNAME}',
+        'PASSWORD': '${OPENSHIFT_MYSQL_DB_PASSWORD}',
+        'HOST': '${OPENSHIFT_MYSQL_DB_HOST}',   # Or an IP Address that your DB is hosted on
+        'PORT': '${OPENSHIFT_MYSQL_DB_PORT}',
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

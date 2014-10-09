@@ -1,5 +1,5 @@
 """
-Django settings for mccc project.
+Django settings.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -71,7 +71,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.login_redirect',
 )
 
-ROOT_URLCONF = '${DJANGO_SITE_NAME}.urls'
+ROOT_URLCONF = '${OPENSHIFT_DJANGO_PROJECT_NAME}.urls'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -85,7 +85,7 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'mymccc',
+        'NAME': '${OPENSHIFT_MYSQL_DB_NAME}',
         'USER': '${OPENSHIFT_MYSQL_DB_USERNAME}',
         'PASSWORD': '${OPENSHIFT_MYSQL_DB_PASSWORD}',
         'HOST': '${OPENSHIFT_MYSQL_DB_HOST}',   # Or an IP Address that your DB is hosted on

@@ -4,8 +4,8 @@ import sys
 import django
 from django.contrib.auth.models import User
 
-os.environ['DJANGO_SETTINGS_MODULE'] = '${DJANGO_SITE_NAME}.settings'
-sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', '${DJANGO_SITE_NAME}'))
+os.environ['DJANGO_SETTINGS_MODULE'] = '${OPENSHIFT_DJANGO_PROJECT_NAME}.settings'
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', '${OPENSHIFT_DJANGO_PROJECT_NAME}'))
 
 django.setup()
 

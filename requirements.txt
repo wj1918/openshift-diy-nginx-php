@@ -1,2 +1,2 @@
-python-social-auth
+# python-social-auth
 MySQL-python

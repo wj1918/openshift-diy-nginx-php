@@ -1,15 +1,17 @@
 #!/bin/bash
-export OPENSHIFT_REPO_DIR=$HOME/projects/diy-all/openshift-diy-nginx-php/
-export OPENSHIFT_DIY_DIR=$HOME/projects/DUMMY_OPENSHIFT_DIY/
+export OPENSHIFT_REPO_DIR=$HOME/projects/openshift-diy-nginx-php/
+export OPENSHIFT_DIY_DIR=$HOME/myrhc/
+export OPENSHIFT_RUNTIME_DIR=${OPENSHIFT_DIY_DIR}runtime/
 export OPENSHIFT_TMP_DIR=/tmp/
 export OPENSHIFT_LOG_DIR=/tmp/log/
 export OPENSHIFT_DIY_LOG_DIR=$OPENSHIFT_LOG_DIR
 export OPENSHIFT_DIY_IP=127.0.0.1
 export OPENSHIFT_DIY_PORT=8080
 
+export OPENSHIFT_MYSQL_DB_ENGINE=django.db.backends.mysql
+export OPENSHIFT_MYSQL_DB_NAME=mymccc
 export OPENSHIFT_MYSQL_DB_HOST=localhost
 export OPENSHIFT_MYSQL_DB_PORT=3306
-export OPENSHIFT_MYSQL_DB_NAME=mymccc
 export OPENSHIFT_MYSQL_DB_USERNAME=root
 export OPENSHIFT_MYSQL_DB_PASSWORD=password
 

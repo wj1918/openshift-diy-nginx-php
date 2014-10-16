@@ -15,6 +15,8 @@ export OPENSHIFT_BIN=${OPENSHIFT_RUNTIME_DIR}bin/
 export DJANGO_SITE_NAME=${OPENSHIFT_DJANGO_PROJECT_NAME}
 
 export PATH=${OPENSHIFT_BIN}:$PATH
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # When using rockmongo this is set and can cause strange errors here
 export PHPRC=${OPENSHIFT_RUNTIME_DIR}etc/php5/

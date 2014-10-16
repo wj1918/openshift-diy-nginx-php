@@ -14,7 +14,7 @@ function install_python() {
     make install -j$NUMBER_OF_PROCESSORS
 
     check_status $? "Installing python $PYTHON_VERSION..."
-    
+
     popd
 }
 
@@ -51,7 +51,8 @@ function check_venv() {
     fi
 
     msg_info "Creating virtualenv..."
-    virtualenv --no-site-packages --python="$python_bin" $virtualenv_dir
+    ${ROOT_DIR}/python/bin/pip3 install virtualenv
+    ${ROOT_DIR}/python/bin/virtualenv --no-site-packages --python="$python_bin" $virtualenv_dir
     check_status $? 'Creating virtualenv...'
 }
 
@@ -63,7 +64,7 @@ function install_requirements() {
     fi
 
     activate_virtualenv
-    pip install --use-mirrors -r $REQUIREMENTS_FILE
+    pip3 install --use-mirrors -r $REQUIREMENTS_FILE
     check_status $? "Procesing requirements..."
     deactivate
 }

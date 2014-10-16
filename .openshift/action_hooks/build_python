@@ -64,7 +64,7 @@ function install_requirements() {
     fi
 
     activate_virtualenv
-    pip3 install --use-mirrors -r $REQUIREMENTS_FILE
+    ${ROOT_DIR}/python/bin/pip3 install --use-mirrors -r $REQUIREMENTS_FILE
     check_status $? "Procesing requirements..."
     deactivate
 }

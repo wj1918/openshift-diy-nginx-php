@@ -15,7 +15,8 @@ function install_python() {
 
     check_status $? "Installing python $PYTHON_VERSION..."
 
-    ln -s $python_dir/bin/python3  $python_dir/bin/python 
+    ln -s $python_dir/bin/python3 $python_dir/bin/python
+
     popd
 }
 
@@ -65,7 +66,7 @@ function install_requirements() {
     fi
 
     activate_virtualenv
-    pip3 install --use-mirrors -r $REQUIREMENTS_FILE
+    ${ROOT_DIR}/python/bin/pip3 install --use-mirrors -r $REQUIREMENTS_FILE
     check_status $? "Procesing requirements..."
     deactivate
 }

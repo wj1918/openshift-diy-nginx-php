@@ -8,7 +8,8 @@ export OPENSHIFT_DIY_LOG_DIR=$OPENSHIFT_LOG_DIR
 export OPENSHIFT_DIY_IP=127.0.0.1
 export OPENSHIFT_DIY_PORT=8080
 
-export OPENSHIFT_MYSQL_DB_ENGINE=django.db.backends.mysql
+#export OPENSHIFT_MYSQL_DB_ENGINE=django.db.backends.mysql
+export OPENSHIFT_MYSQL_DB_ENGINE=mysql.connector.django
 export OPENSHIFT_MYSQL_DB_NAME=mymccc
 export OPENSHIFT_MYSQL_DB_HOST=localhost
 export OPENSHIFT_MYSQL_DB_PORT=3306

@@ -7,9 +7,16 @@ function check_django() {
     activate_virtualenv
     if [ -z "$(pip freeze | grep Django)" ]; then
 #    if [[ true ]]; then
+
+
+        msg_info 'Installling python mysql connector ...'
+	pip3 install --allow-external mysql-connector-python mysql-connector-python
+        check_status $? 'Installling python mysql connector...'
+
         msg_info 'Installling Django...'
-        pip install Django
+        pip3 install Django
         check_status $? 'Installling Django...'
+
         cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/
         pushd $OPENSHIFT_REPO_DIR/wsgi/
         rm -rf ${DJANGO_SITE_NAME}

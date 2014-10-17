@@ -8,9 +8,8 @@ function check_django() {
     if [ -z "$(pip freeze | grep Django)" ]; then
 #    if [[ true ]]; then
 
-
         msg_info 'Installling python mysql connector ...'
-	pip3 install --allow-external mysql-connector-python mysql-connector-python
+        pip3 install --allow-external mysql-connector-python mysql-connector-python
         check_status $? 'Installling python mysql connector...'
 
         msg_info 'Installling Django...'
@@ -19,8 +18,6 @@ function check_django() {
 
         cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/
         pushd $OPENSHIFT_REPO_DIR/wsgi/
-        rm -rf ${DJANGO_SITE_NAME}
-        django-admin.py startproject ${DJANGO_SITE_NAME}
 
         echo "Pre-processing Django config."
         mkdir -p ${BUILD_DIR}
@@ -46,6 +43,6 @@ function check_django() {
     else
         msg_success 'Checking for Django ... already installed.'
     fi
-    deactivate    
+#    deactivate    
 }
 

@@ -45,12 +45,19 @@ cp ${TEMPLATE_DIR}/config.inc.php.tmpl ${BUILD_DIR}/config.inc.php
 perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/config.inc.php
 cp ${BUILD_DIR}/config.inc.php ${PHPMYADMIN_DIR}/config.inc.php
 
+echo "Pre-processing Django config."
+mkdir -p ${BUILD_DIR}
+cp ${TEMPLATE_DIR}/settings.py.tmpl ${BUILD_DIR}/settings.py
+perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/settings.py
+cp ${BUILD_DIR}/settings.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
+
+cp ${TEMPLATE_DIR}/urls.py.tmpl ${BUILD_DIR}/urls.py
+perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/urls.py
+cp ${BUILD_DIR}/urls.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
+
+echo "Pre-processing uWSGI config... "
+cp ${TEMPLATE_DIR}/uwsgi.ini.tmpl ${BUILD_DIR}/uwsgi.ini
+perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/uwsgi.ini
+cp ${BUILD_DIR}/uwsgi.ini $CONFIG_DIR/uwsgi.ini
+
 rm -rf ${BUILD_DIR}
-
-#bash_profile=${OPENSHIFT_DATA_DIR}/.bash_profile
-#echo "Copy bash profile."
-#cp ${TEMPLATE_DIR}/bash_profile.tmpl ${bash_profile}
-
-env | sed 's/[\%]/\\&/g;s/\([^=]*\)=\(.*\)/s%${\1}%\2%/' > $OPENSHIFT_TMP_DIR/sed.script
-
-copy_templates

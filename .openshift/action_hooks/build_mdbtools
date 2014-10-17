@@ -1,0 +1,17 @@
+#!/bin/bash
+function install_mdbtool()
+{
+    # build mdbtool
+    mkdir -p ${BUILD_DIR}
+    pushd ${BUILD_DIR}
+    git clone https://github.com/wj1918/mdbtools.git 
+    cd mdbtools
+    export ACLOCAL_PATH=`aclocal --print-ac-dir`:${ROOT_DIR}/libs/share/aclocal
+    ${ROOT_DIR}/libs/bin/libtoolize
+    autoreconf -i -f
+    ./configure --disable-gmdb2 --disable-scrollkeeper --disable-man --prefix=${ROOT_DIR}/libs/
+    make
+    make install
+    popd
+
+}

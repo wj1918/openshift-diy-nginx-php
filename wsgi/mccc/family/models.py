@@ -2,8 +2,16 @@ from django.db import models
 
 # Create your models here.
 
+def xstr(s):
+    if s is None:
+        return ''
+    return str(s)
+    
 class Family(models.Model):
-    familyid = models.IntegerField(db_column='FamilyID', primary_key=True)  # Field name made lowercase.
+    def __str__(self):
+        return xstr(self.address)
+        
+    familyid = models.AutoField(db_column='FamilyID',primary_key=True)
     status = models.CharField(db_column='Status', max_length=2, blank=True)  # Field name made lowercase.
     home1 = models.CharField(db_column='Home1', max_length=40, blank=True)  # Field name made lowercase.
     home2 = models.CharField(db_column='Home2', max_length=40, blank=True)  # Field name made lowercase.
@@ -19,7 +27,10 @@ class Family(models.Model):
 
 
 class Person(models.Model):
-    personid = models.IntegerField(db_column='PersonID', primary_key=True)  # Field name made lowercase.
+    def __str__(self):
+        return '{0}, {1}'.format(self.first, self.last)
+    
+    personid = models.AutoField(db_column='PersonID',primary_key=True)
     last = models.CharField(db_column='Last', max_length=30, blank=True)  # Field name made lowercase.
     first = models.CharField(db_column='First', max_length=40, blank=True)  # Field name made lowercase.
     middle = models.CharField(db_column='Middle', max_length=20, blank=True)  # Field name made lowercase.

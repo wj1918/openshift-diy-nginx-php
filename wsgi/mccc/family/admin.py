@@ -4,10 +4,15 @@ from django.contrib import admin
 from family.models import Person
 from family.models import Family
 
+class PersonInline(admin.StackedInline):
+    model = Person
+    extra = 0
+
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ('status', 'home1','home2', 'homefax','address','city','state','zip')
-    list_filter = ['status','city','state','zip']
-    search_fields = ['home1','home2','address','city']
+    list_display = ('address','city','state','zip','status', 'home1','home2', 'homefax')
+    list_filter = ['status','city','state']
+    search_fields = ['address','city','home1']
+    inlines = [PersonInline]
         
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('last','first','middle','chinese','sex','role','wphone','wfax','email','eaddr','waddress','category','birthday','anniday','member','memday','worship','baptized','bapday','cphone','age','family')

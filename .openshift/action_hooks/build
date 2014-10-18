@@ -54,6 +54,9 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phpmyadmin
 # Check nginx
 check_nginx
 
+# Check glib2
+check_glib2
+
 # Check mdbtools
 check_mdbtools
 

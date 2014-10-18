@@ -4,6 +4,7 @@ function install_mdbtool()
     # build mdbtool
     mkdir -p ${BUILD_DIR}
     pushd ${BUILD_DIR}
+    rm -rf mdbtools
     git clone https://github.com/wj1918/mdbtools.git 
     cd mdbtools
     export ACLOCAL_PATH=`aclocal --print-ac-dir`:${ROOT_DIR}/libs/share/aclocal
@@ -14,4 +15,12 @@ function install_mdbtool()
     make install
     popd
 
+}
+
+function check_mdbtools() {
+    local mdbtool_bin=${ROOT_DIR}/libs/bin/mdb-export
+    if [[ ! -e  ${mdbtool_bin} ]]; then
+        echo "mdbtools not installed."
+        install_mdbtool
+    fi
 }

@@ -43,6 +43,7 @@ fi
 # Load functions
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_nginx
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php_libs
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_mdbtools
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
@@ -52,6 +53,9 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phpmyadmin
 
 # Check nginx
 check_nginx
+
+# Check mdbtools
+check_mdbtools
 
 if [ "$BUILD_PHP_FROM_SOURCE" == "Yes" ]; then
 

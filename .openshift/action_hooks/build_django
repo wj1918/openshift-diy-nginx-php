@@ -9,11 +9,11 @@ function check_django() {
 #    if [[ true ]]; then
 
         msg_info 'Installling python mysql connector ...'
-        pip3 install --allow-external mysql-connector-python mysql-connector-python
+        pip install --allow-external mysql-connector-python mysql-connector-python
         check_status $? 'Installling python mysql connector...'
 
         msg_info 'Installling Django...'
-        pip3 install Django
+        pip install Django
         check_status $? 'Installling Django...'
 
         cp secure_db.py $OPENSHIFT_REPO_DIR/wsgi/

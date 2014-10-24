@@ -25,7 +25,8 @@ LIBTOOL_VERSION='2.4.2'
 
 NODE_VERSION='0.6.20' #'0.10.26'
 
-PYTHON_VERSION="3.4.2"
+PYTHON3_VERSION="3.4.2"
+PYTHON2_VERSION="2.7.8"
 PHPMYADMIN_VERSION="4.2.8"
 
 declare -A PHP_PECL
@@ -46,7 +47,7 @@ source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php_libs
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_mdbtools
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_php
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_node
-source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python
+source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_python${OPENSHIFT_PYTHON_VERSION}
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_uwsgi
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_django
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/build_phpmyadmin
@@ -89,10 +90,13 @@ fi
 # check_node
 
 # check python
-check_python
+check_python${OPENSHIFT_PYTHON_VERSION}
+
+# check pip2 env
+check_pip${OPENSHIFT_PYTHON_VERSION}
 
 # check virtual env
-check_venv
+check_venv${OPENSHIFT_PYTHON_VERSION}
 
 # check uwsgi
 check_uwsgi
@@ -101,7 +105,7 @@ check_uwsgi
 check_phpmyadmin
 
 # install requirement
-install_requirements
+install_requirements${OPENSHIFT_PYTHON_VERSION}
 
 # check django
 check_django

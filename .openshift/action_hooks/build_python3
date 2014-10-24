@@ -58,7 +58,7 @@ function check_venv() {
     check_status $? 'Creating virtualenv...'
 }
 
-function install_requirements() {
+function install_requirements3() {
     msg_info "Procesing requirements..."
     if [ ! -f $REQUIREMENTS_FILE ]; then
         msg_info "Procesing requirements... not found"

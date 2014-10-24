@@ -1,21 +1,5 @@
 #!/bin/bash
 
-function expand_env_vars() {
-    local SRC=$1
-    local DEST=$2
-    cat $SRC | sed -f $OPENSHIFT_TMP_DIR/sed.script > $DEST
-}
-
-function copy_templates() {
-    mkdir -p $CONFIG_DIR
-    expand_env_vars $TEMPLATE_DIR/uwsgi.ini.tmpl $CONFIG_DIR/uwsgi.ini
-    msg_info "Creating uWSGI config... done"
-
-#    msg_info "Creating nginx config..."
-#    expand_env_vars $TEMPLATE_DIR/nginx.conf.tmpl $ROOT_DIR/nginx/conf/nginx.conf
-#    msg_info "Creating nginx config... done"
-}
-
 set -e
 
 source ${OPENSHIFT_REPO_DIR}/.openshift/action_hooks/common

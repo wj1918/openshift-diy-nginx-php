@@ -9,12 +9,14 @@
 # 5. $OPENSHIFT_DIY_IP
 # 6. $OPENSHIFT_DIY_PORT
 
-
+source ${OPENSHIFT_DATA_DIR}rhc_profile
 export OPENSHIFT_RUN_DIR=${OPENSHIFT_DIY_DIR}run/
 export OPENSHIFT_BIN=${OPENSHIFT_RUNTIME_DIR}bin/
 export DJANGO_SITE_NAME=${OPENSHIFT_DJANGO_PROJECT_NAME}
 
-export PATH=${OPENSHIFT_BIN}:$PATH
+export PATH=${OPENSHIFT_BIN}:${OPENSHIFT_RUNTIME_DIR}/libs/bin:$PATH
+export PKG_CONFIG_PATH=${OPENSHIFT_RUNTIME_DIR}/libs/lib/pkgconfig
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -25,8 +27,6 @@ ROOT_DIR=${OPENSHIFT_RUNTIME_DIR}
 BUILD_DIR=${OPENSHIFT_TMP_DIR}build/
 CONFIG_DIR=${OPENSHIFT_RUNTIME_DIR}conf/
 TEMPLATE_DIR=${OPENSHIFT_REPO_DIR}.openshift/tmpl/
-
-REQUIREMENTS_FILE="$OPENSHIFT_REPO_DIR/requirements.txt"
 
 # AUX functions
 
@@ -58,6 +58,6 @@ function check_status() {
 }
 
 function activate_virtualenv() {
-    local virtualenv_dir="$OPENSHIFT_RUNTIME_DIR/venv"
+    local virtualenv_dir="$OPENSHIFT_RUNTIME_DIR/venv${OPENSHIFT_PYTHON_VERSION}"
     source "$virtualenv_dir/bin/activate"
 }

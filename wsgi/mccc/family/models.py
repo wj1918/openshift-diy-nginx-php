@@ -1,15 +1,14 @@
 from django.db import models
 
 # Create your models here.
-
 def xstr(s):
     if s is None:
         return ''
     return str(s)
-    
+
 class Family(models.Model):
     def __str__(self):
-        return xstr(self.address)
+        return xstr(self.address) +","+xstr(self.city)+ ","+ xstr(self.state) + ","+ xstr(self.zip)
         
     familyid = models.AutoField(db_column='FamilyID',primary_key=True)
     status = models.CharField(db_column='Status', max_length=2, blank=True)  # Field name made lowercase.
@@ -20,7 +19,7 @@ class Family(models.Model):
     city = models.CharField(db_column='City', max_length=40, blank=True)  # Field name made lowercase.
     state = models.CharField(db_column='State', max_length=4, blank=True)  # Field name made lowercase.
     zip = models.CharField(db_column='Zip', max_length=20, blank=True)  # Field name made lowercase.
-
+      
     class Meta:
         managed = False
         db_table = 'MCCC_Family'

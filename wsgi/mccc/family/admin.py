@@ -4,6 +4,11 @@ from django.contrib import admin
 from family.models import Person
 from family.models import Family
 
+def xstr(s):
+    if s is None:
+        return ''
+    return str(s)
+
 class PersonInline(admin.StackedInline):
     model = Person
     extra = 0
@@ -20,12 +25,12 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ['last','first','chinese','email', "family__address", "family__city", "family__state", "family__zip","family__home1","family__home2","family__homefax"]
 
     def get_family_address(self, obj):
-        return obj.family.address +","+obj.family.city+ ","+ obj.family.state + ","+ obj.family.zip
+        return xstr(obj.family.address) +","+xstr(obj.family.city)+ ","+ xstr(obj.family.state) + ","+ xstr(obj.family.zip)
     get_family_address.short_description = 'Family Address'
     get_family_address.admin_order_field = 'family__address'
 
     def get_family_phone(self, obj):
-        return obj.family.home1 +" "+obj.family.home2+ " "+ obj.family.homefax
+        return xstr(obj.family.home1) +" "+xstr(obj.family.home2)+ " "+ xstr(obj.family.homefax)
     get_family_phone.short_description = 'Family Phone'
     get_family_phone.admin_order_field = 'family__home1s'
     

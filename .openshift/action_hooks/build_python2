@@ -52,7 +52,7 @@ function check_pip2() {
     mkdir -p ${BUILD_DIR}
     pushd ${BUILD_DIR}
 
-    rm get-pip.py
+    rm -f get-pip.py
     wget https://bootstrap.pypa.io/get-pip.py
     ${ROOT_DIR}/python2/bin/python get-pip.py
     check_status $? 'Installing pip 2 ...'

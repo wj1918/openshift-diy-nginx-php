@@ -46,7 +46,7 @@ function check_glib2()
 function check_mdbtools() {
     local mdbtool_bin=${ROOT_DIR}/libs/bin/mdb-export
     if [[ ! -e  ${mdbtool_bin} ]]; then
-        echo "mdbtools not installed."Aa
+        echo "mdbtools not installed."
         install_mdbtool
     fi
 }

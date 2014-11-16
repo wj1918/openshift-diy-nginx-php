@@ -38,6 +38,17 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'family',
     'children',
+
+    # theme
+    "bootstrapform",
+    "pinax_theme_bootstrap",
+
+    # external
+    "account",
+    "eventlog",
+    "metron",
+    "social.apps.django_app.default",
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,3 +95,84 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+# Additional locations of static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.core.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
+    "social.apps.django_app.context_processors.backends",
+    "social.apps.django_app.context_processors.login_redirect",
+    "pinax_theme_bootstrap.context_processors.theme",
+]
+
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, "templates"),
+]
+
+
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, "fixtures"),
+]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+ACCOUNT_OPEN_SIGNUP = True
+ACCOUNT_USE_OPENID = False
+ACCOUNT_REQUIRED_EMAIL = False
+ACCOUNT_EMAIL_UNIQUE = True
+ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
+ACCOUNT_LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
+
+AUTHENTICATION_BACKENDS = [
+    "social.backends.google.GoogleOAuth2",
+    "social.backends.live.LiveOAuth2",
+    "social.backends.yahoo.YahooOAuth",
+    "django.contrib.auth.backends.ModelBackend",
+    "social.backends.facebook.FacebookOAuth2",
+#    "social.backends.twitter.TwitterOAuth",
+#    "social.backends.yahoo.YahooOpenId",
+]
+
+SOCIAL_AUTH_PIPELINE = [
+    "social.pipeline.social_auth.social_details",
+    "social.pipeline.social_auth.social_uid",
+    "social.pipeline.social_auth.auth_allowed",
+    "social.pipeline.social_auth.social_user",
+    "social.pipeline.user.get_username",
+#    "mysite.pipeline.prevent_dupes",
+#    'social.pipeline.social_auth.associate_by_email',
+    "social.pipeline.user.create_user",
+    "social.pipeline.social_auth.associate_user",
+    "social.pipeline.social_auth.load_extra_data",
+    "social.pipeline.user.user_details"
+]
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '133268637455.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dWfCS9c36BQysq6s9kY0WOM2'
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get("SOCIAL_AUTH_TWITTER_KEY")
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get("SOCIAL_AUTH_TWITTER_SECRET")
+SOCIAL_AUTH_FACEBOOK_KEY = '291287154401605'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'd6c4d12dff3c55db556ecfc67f4c883b'
+SOCIAL_AUTH_YAHOO_OAUTH_KEY = 'dj0yJmk9anJIMWMyNmZyZjZDJmQ9WVdrOVRGZzJPRGxKTmpJbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1hZg--'
+SOCIAL_AUTH_YAHOO_OAUTH_SECRET = 'b0048a426820cf85d32f8dc143aab7aae5f5d6a6'
+SOCIAL_AUTH_LIVE_KEY = '0000000040135299'
+SOCIAL_AUTH_LIVE_SECRET = 'wBbKqt5LCkRIR1E03ZFbHAeVxivRuuw9'
+
+SOCIAL_AUTH_LIVE_SCOPE = ["wl.emails"]
+SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ["email"]
+

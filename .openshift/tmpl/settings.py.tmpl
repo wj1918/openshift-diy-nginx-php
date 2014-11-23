@@ -131,8 +131,9 @@ ACCOUNT_USE_OPENID = False
 ACCOUNT_REQUIRED_EMAIL = False
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = False
-ACCOUNT_LOGIN_REDIRECT_URL = "home"
-ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
 AUTHENTICATION_BACKENDS = [
@@ -152,14 +153,16 @@ SOCIAL_AUTH_PIPELINE = [
     "social.pipeline.social_auth.social_user",
     "social.pipeline.user.get_username",
 #    "mysite.pipeline.prevent_dupes",
-#    'social.pipeline.social_auth.associate_by_email',
-    "social.pipeline.user.create_user",
+    'social.pipeline.social_auth.associate_by_email',
+#    "social.pipeline.user.create_user",
     "social.pipeline.social_auth.associate_user",
     "social.pipeline.social_auth.load_extra_data",
     "social.pipeline.user.user_details"
 ]
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = "/"
+NEW_USER_REDIRECT_URL = "/"
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '133268637455.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dWfCS9c36BQysq6s9kY0WOM2'

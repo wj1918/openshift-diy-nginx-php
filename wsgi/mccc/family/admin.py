@@ -14,15 +14,20 @@ class PersonInline(admin.StackedInline):
     extra = 0
 
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ('address','city','state','zip','status', 'home1','home2', 'homefax')
+    list_display = ('familyid','address','city','state','zip','status', 'home1','home2', 'homefax')
     list_filter = ['status','city','state']
-    search_fields = ['address','city','home1']
+    search_fields = ['familyid','address','city','home1']
     inlines = [PersonInline]
         
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('last','first','middle','chinese','sex','role','wphone','email','eaddr','category','birthday','anniday','member','memday','worship','baptized','bapday','cphone','age','get_family_address','get_family_phone')
+    list_display = ('personid','last','first','middle','chinese','sex','role','wphone','email','eaddr','category','birthday','anniday','member','memday','worship','baptized','bapday','cphone','age','get_family_id','get_family_address','get_family_phone')
     list_filter = ['worship','baptized','member']
     search_fields = ['last','first','chinese','email', "family__address", "family__city", "family__state", "family__zip","family__home1","family__home2","family__homefax"]
+
+    def get_family_id(self, obj):
+        return obj.family.familyid
+    get_family_id.short_description = 'Family Id'
+    get_family_id.admin_order_field = 'family__familyid'
 
     def get_family_address(self, obj):
         return xstr(obj.family.address) +","+xstr(obj.family.city)+ ","+ xstr(obj.family.state) + ","+ xstr(obj.family.zip)

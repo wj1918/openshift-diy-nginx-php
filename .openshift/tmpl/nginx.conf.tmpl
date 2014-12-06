@@ -116,9 +116,8 @@ http {
         add_header Strict-Transport-Security max-age=691200;
 
         location / {
-            index  index.html  index.htm  index.php ;
-
-            # try_files $uri $uri/ @rewrites @app;
+            uwsgi_pass django;
+            include uwsgi_params;
         }
 
         location = /robots.txt  { access_log off; log_not_found off; }
@@ -130,7 +129,7 @@ http {
         #location ~* ^.+\.(css|js|jpg|jpeg|gif|png|ico|gz|svg|svgz|ttf|otf|woff|eot|mp4|ogg|ogv|webm)$ {
         #    access_log off;
         #    log_not_found off;
-	#
+        #
         #    # Some basic cache-control for static files to be sent to the browser
         #    expires max;
         #    add_header Pragma public;
@@ -141,12 +140,17 @@ http {
         #    rewrite ^(.*)$ /index.php/$1 last;
         #}
 
-        location /admin/ {
+        location /static/ {
             uwsgi_pass django;
             include uwsgi_params;
         }
 
-        location /static/ {
+        location /account/ {
+            uwsgi_pass django;
+            include uwsgi_params;
+        }
+
+        location /admin/ {
             uwsgi_pass django;
             include uwsgi_params;
         }

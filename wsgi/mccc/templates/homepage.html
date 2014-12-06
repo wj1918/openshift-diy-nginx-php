@@ -13,7 +13,10 @@
                 {% include "_social_login.html" %}
             {% else %} 
                 <div class="jumbotron text-center">
-                    <p><a class="btn btn-primary btn-lg" href="admin/family" role="button">Manage Family Database</a></p>
+                    <div class="well" style="max-width: 600px; margin: 0 auto 10px;">
+                        <p><a class="btn btn-primary btn-lg btn-block" href="admin/family" role="button">Manage Family Database</a></p>
+                        <p><a class="btn btn-primary btn-lg btn-block" href="admin/children" role="button">Search Children Database</a></p>
+                    </div>
                 </div>
             {% endif %}
         </div>

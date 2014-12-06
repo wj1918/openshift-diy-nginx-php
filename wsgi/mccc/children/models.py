@@ -64,4 +64,4 @@ class CmMaster(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'CM_MASTER'
+        db_table = 'MCCC_CM_Master'

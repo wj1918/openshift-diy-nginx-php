@@ -47,6 +47,7 @@ class Person(models.Model):
     member = models.CharField(db_column='Member', max_length=2, blank=True)  # Field name made lowercase.
     memday = models.DateField(db_column='MemDay', blank=True, null=True)  # Field name made lowercase.
     worship = models.CharField(db_column='Worship', max_length=4, blank=True)  # Field name made lowercase.
+    fellowship = models.CharField(db_column='Fellowship', max_length=15, blank=True)  # Field name made lowercase.
     baptized = models.CharField(db_column='Baptized', max_length=4, blank=True)  # Field name made lowercase.
     bapday = models.CharField(db_column='BapDay', max_length=510, blank=True)  # Field name made lowercase.
     cphone = models.CharField(db_column='CPhone', max_length=510, blank=True)  # Field name made lowercase.

@@ -21,9 +21,9 @@ class FamilyAdmin(admin.ModelAdmin):
     inlines = [PersonInline]
         
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('personid','last','first','middle','chinese','sex','role','wphone','email','eaddr','category','birthday','anniday','member','memday','worship','baptized','bapday','cphone','age','get_family_id','get_family_address','get_family_phone')
-    list_filter = ['fellowship','worship','baptized','member']
-    search_fields = ['last','first','chinese','email', "family__address", "family__city", "family__state", "family__zip","family__home1","family__home2","family__homefax"]
+    list_display = ('personid','last','first','middle','chinese','sex','role','get_family_address','get_family_phone','email','cphone','wphone','worship','fellowship','fellowship2','baptized','bapday','category','birthday','member','memday','get_family_id',)
+    list_filter = ['fellowship','fellowship2','worship','baptized','member','family__city',]
+    search_fields = ['last','first','chinese','email','comment', "family__address", "family__city", "family__state", "family__zip","family__home1","family__home2","family__homefax",]
 
     def get_family_id(self, obj):
         return obj.family.familyid

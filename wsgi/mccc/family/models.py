@@ -36,25 +36,24 @@ class Person(models.Model):
     chinese = models.CharField(db_column='Chinese', max_length=20, blank=True)  # Field name made lowercase.
     sex = models.CharField(db_column='Sex', max_length=2, blank=True)  # Field name made lowercase.
     role = models.CharField(db_column='Role', max_length=4, blank=True)  # Field name made lowercase.
+    email = models.CharField(db_column='Email', max_length=100, blank=True)  # Field name made lowercase.
+    cphone = models.CharField(db_column='CPhone', max_length=510, blank=True)  # Field name made lowercase.
     wphone = models.CharField(db_column='WPhone', max_length=40, blank=True)  # Field name made lowercase.
     wfax = models.CharField(db_column='WFax', max_length=40, blank=True)  # Field name made lowercase.
-    email = models.CharField(db_column='Email', max_length=100, blank=True)  # Field name made lowercase.
-    eaddr = models.IntegerField(db_column='Eaddr', blank=True, null=True)  # Field name made lowercase.
     waddress = models.CharField(db_column='Waddress', max_length=100, blank=True)  # Field name made lowercase.
+    worship = models.CharField(db_column='Worship', max_length=4, blank=True)  # Field name made lowercase.
+    fellowship = models.CharField(db_column='Fellowship', max_length=50, blank=True)  # Field name made lowercase.
+    fellowship2 = models.CharField(db_column='Fellowship2', max_length=50, blank=True)  # Field name made lowercase.
+    baptized = models.CharField(db_column='Baptized', max_length=4, blank=True)  # Field name made lowercase.
+    bapday = models.CharField(db_column='BapDay', max_length=510, blank=True)  # Field name made lowercase.
     category = models.CharField(db_column='Category', max_length=4, blank=True)  # Field name made lowercase.
     birthday = models.DateField(db_column='Birthday', blank=True, null=True)  # Field name made lowercase.
     anniday = models.DateField(db_column='AnniDay', blank=True, null=True)  # Field name made lowercase.
     member = models.CharField(db_column='Member', max_length=2, blank=True)  # Field name made lowercase.
     memday = models.DateField(db_column='MemDay', blank=True, null=True)  # Field name made lowercase.
-    worship = models.CharField(db_column='Worship', max_length=4, blank=True)  # Field name made lowercase.
-    fellowship = models.CharField(db_column='Fellowship', max_length=15, blank=True)  # Field name made lowercase.
-    baptized = models.CharField(db_column='Baptized', max_length=4, blank=True)  # Field name made lowercase.
-    bapday = models.CharField(db_column='BapDay', max_length=510, blank=True)  # Field name made lowercase.
-    cphone = models.CharField(db_column='CPhone', max_length=510, blank=True)  # Field name made lowercase.
-    age = models.IntegerField(db_column='Age', blank=True, null=True)  # Field name made lowercase.
+    comment = models.TextField(db_column='Comment', blank=True, null=True)  # Field name made lowercase.
     family = models.ForeignKey(Family,db_column='FamilyID',related_name="persons")
 
     class Meta:
         managed = False
         db_table = 'MCCC_Person'
-

@@ -11,46 +11,6 @@ from django.contrib.admin import SimpleListFilter
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
-class DefaultListFilter(SimpleListFilter):
-    all_value = '_all'
-
-    def default_value(self):
-        raise NotImplementedError()
-
-    def queryset(self, request, queryset):
-        if self.parameter_name in request.GET and request.GET[self.parameter_name] == self.all_value:
-            return queryset
-
-        if self.parameter_name in request.GET:
-            return queryset.filter(**{self.parameter_name:request.GET[self.parameter_name]})
-
-        return queryset.filter(**{self.parameter_name:self.default_value()})
-
-    def choices(self, cl):
-        yield {
-            'selected': self.value() == self.all_value,
-            'query_string': cl.get_query_string({self.parameter_name: self.all_value}, []),
-            'display': _('All'),
-        }
-        for lookup, title in self.lookup_choices:
-            yield {
-                'selected': self.value() == force_text(lookup) or (self.value() == None and force_text(self.default_value()) == force_text(lookup)),
-                'query_string': cl.get_query_string({
-                    self.parameter_name: lookup,
-                }, []),
-                'display': title,
-            }
-
-class StatusFilter(DefaultListFilter):
-    title = _('family status')
-    parameter_name = 'family__status'
-
-    def lookups(self, request, model_admin):
-        return (('A','A'), ('D','D'),  ('I','I'), ('L','L'), ('N','N'), ('O','O'), ('R','R'))
-
-    def default_value(self):
-        return 'A'
-
 def xstr(s):
     if s is None:
         return ''
@@ -68,7 +28,7 @@ class FamilyAdmin(admin.ModelAdmin):
         
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('personid','last','first','middle','chinese','sex','role','get_family_address','get_family_phone','email','cphone','wphone','worship','fellowship','fellowship2','baptized','bapday','category','birthday','member','memday','get_family_id','get_family_status')
-    list_filter = ['fellowship','fellowship2','worship','baptized','member', StatusFilter, 'family__city',]
+    list_filter = ['fellowship','fellowship2','worship','baptized','member', 'family__status', 'family__city',]
     search_fields = ['last','first','chinese','email','comment', "family__address", "family__city", "family__state", "family__zip","family__home1","family__home2","family__homefax",]
 
     def get_family_status(self, obj):

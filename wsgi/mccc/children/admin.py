@@ -1,7 +1,9 @@
 from django.contrib import admin
-# Register your models here.
-
+from django.contrib.admin import AdminSite
 from children.models import CmMaster
+
+class ChildrenSite(AdminSite):
+    site_header = 'Children'
 
 class CmMasterAdmin(admin.ModelAdmin):
     list_display = ['first_last','first_last','ssgrade','ssactive','choiractive','choirgrade','fname','lname','chinese_name','gender','grade','dob',
@@ -12,5 +14,6 @@ class CmMasterAdmin(admin.ModelAdmin):
     'email','street','city','state','zip','home']
     list_filter = ['ssactive','ssgrade','choiractive','choirgrade']
     
+children_site = ChildrenSite(name='children')
         
-admin.site.register(CmMaster,CmMasterAdmin)
+children_site.register(CmMaster,CmMasterAdmin)

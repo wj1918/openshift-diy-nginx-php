@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from family.models import Person
 from family.models import Family
+from family.models import McccDir
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin import SimpleListFilter
 
@@ -50,8 +51,6 @@ class PersonAdmin(admin.ModelAdmin):
         return xstr(obj.family.home1) +" "+xstr(obj.family.home2)+ " "+ xstr(obj.family.homefax)
     get_family_phone.short_description = 'Family Phone'
     get_family_phone.admin_order_field = 'family__home1s'
-    
-    
 
 admin.site.register(Family,FamilyAdmin)
 admin.site.register(Person,PersonAdmin)

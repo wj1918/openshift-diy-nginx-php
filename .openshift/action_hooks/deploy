@@ -39,10 +39,6 @@ cp ${TEMPLATE_DIR}/settings.py.tmpl ${BUILD_DIR}/settings.py
 perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/settings.py
 cp ${BUILD_DIR}/settings.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
 
-cp ${TEMPLATE_DIR}/urls.py.tmpl ${BUILD_DIR}/urls.py
-perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/urls.py
-cp ${BUILD_DIR}/urls.py ${OPENSHIFT_REPO_DIR}wsgi/${DJANGO_SITE_NAME}/${DJANGO_SITE_NAME}/
-
 echo "Pre-processing uWSGI config... "
 cp ${TEMPLATE_DIR}/uwsgi.ini.tmpl ${BUILD_DIR}/uwsgi.ini
 perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' ${BUILD_DIR}/uwsgi.ini

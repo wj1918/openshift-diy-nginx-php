@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from account.views import LogoutView
 from django.views.generic.base import RedirectView
+from member.admin import member_site
+from children.admin import children_site
 
 urlpatterns = patterns('',
     # Examples:
@@ -20,7 +22,16 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r"^account/social/", include("social.apps.django_app.urls", namespace="social")),
     url(r"^account/logout/$", LogoutView.as_view(), name="account_logout"),
+    url(r'^member/', include(member_site.urls)),
+    url(r'^children/', include(children_site.urls)),
 )
 urlpatterns += staticfiles_urlpatterns()
 
 admin.site.site_header = 'Administration'
+admin.site.site_title ='Site admin'
+
+member_site.site_header = 'Administration'
+member_site.site_title ='Site admin'
+
+children_site.site_header = 'Administration'
+children_site.site_title ='Site admin'

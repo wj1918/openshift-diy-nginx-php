@@ -127,8 +127,8 @@ def _(description):
     wrapped_action.short_description = description
     return wrapped_action
 
-class DirectorySite(AdminSite):
-    site_header = 'Directory'
+class MemberSite(AdminSite):
+    site_header = 'Member'
 
     
 class McccDirAdmin(admin.ModelAdmin):
@@ -155,5 +155,5 @@ class McccDirAdmin(admin.ModelAdmin):
     ]
     download_as_csv_header = True
 
-directory_site = DirectorySite(name='directory')
-directory_site.register(McccDir,McccDirAdmin)
+member_site = MemberSite(name='member')
+member_site.register(McccDir,McccDirAdmin)

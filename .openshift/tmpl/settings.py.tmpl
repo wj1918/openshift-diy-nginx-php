@@ -139,7 +139,8 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
 AUTHENTICATION_BACKENDS = [
     "social.backends.google.GoogleOAuth2",
-    "social.backends.live.LiveOAuth2",
+#    "social.backends.live.LiveOAuth2",
+    "mccc.live.LiveConnect",
     "social.backends.yahoo.YahooOAuth",
 #    "django.contrib.auth.backends.ModelBackend",
     "social.backends.facebook.FacebookOAuth2",

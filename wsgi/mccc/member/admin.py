@@ -156,5 +156,12 @@ class McccDirAdmin(admin.ModelAdmin):
     ]
     download_as_csv_header = True
 
+    def get_actions(self, request):
+        actions = super(McccDirAdmin, self).get_actions(request)
+        if request.user.is_superuser:
+            return actions
+        else:
+            return None
+        
 member_site = MemberSite(name='member')
 member_site.register(McccDir,McccDirAdmin)

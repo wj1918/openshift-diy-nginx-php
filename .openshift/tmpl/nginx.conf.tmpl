@@ -140,10 +140,10 @@ http {
         #    rewrite ^(.*)$ /index.php/$1 last;
         #}
 
-        location /static/ {
-            uwsgi_pass django;
-            include uwsgi_params;
-        }
+        location /static {    
+            autoindex on;    
+            alias ${OPENSHIFT_STATIC_ROOT};
+        }        
 
         location /account/ {
             uwsgi_pass django;
